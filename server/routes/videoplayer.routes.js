@@ -6,7 +6,7 @@ const Play_Video = express.Router();
 // PLAY VIDEO WITH SUBTITLES ROUTE 
 Play_Video.get('/play/:videoId',  VideoPlayer);
 // SERVE VIDEO ROUTE
-Play_Video.get("/video/:videoId", ServeVideo);
+Play_Video.get("/serve/:videoId", ServeVideo);
 
 // SAVE CUSTOM SUBTITLES AT SPECIFIC TIMESTAMPS
 Play_Video.post("/custom-subtitle", customSubtitles);
