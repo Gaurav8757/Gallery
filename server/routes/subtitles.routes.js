@@ -1,9 +1,9 @@
 import express from 'express';
-import { createSubtitles, getSubtitles } from "../controller/subtitle.controller.js";
+import { addSubtitle, getSubtitle } from '../controller/subtitle.controller.js';
 
 const subtitles = express.Router();
 
-subtitles.post('/subtitles', createSubtitles);
-subtitles.get('/subtitles/:videoIndex', getSubtitles);
+subtitles.post('/subtitles/:videoId', addSubtitle);
+subtitles.get('/subtitles/:videoId', getSubtitle);
 
 export default subtitles;

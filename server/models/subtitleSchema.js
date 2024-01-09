@@ -1,11 +1,13 @@
 import mongoose from 'mongoose';
 
 const subtitleSchema = new mongoose.Schema({
-  videoIndex: String,
-  text: String,
-  timestamp: Number,
+  videoId: String,
+  subtitles: String,
+  startTime: Number,
+  endTime: Number,
 });
 
-const SubtitleModel = mongoose.model('Subtitle', subtitleSchema);
+const Subtitle = mongoose.model('Subtitle', subtitleSchema);
 
-export default SubtitleModel;
+export default Subtitle;
+

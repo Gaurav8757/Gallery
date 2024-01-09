@@ -1,9 +1,11 @@
 import express from 'express';
-import { uploadVideo } from "../controller/video.controller.js";
+import { VideoUpload, All_Video_Lists_With_Subtitle } from '../controller/video.controller.js';
 import uploadFile from "../utils/uploadMiddleware.js"
 
 const Upload_Video = express.Router();
+// UPLOAD VIDEOS 
+Upload_Video.post('/upload', uploadFile, VideoUpload);
 
-Upload_Video.post('/upload', uploadFile, uploadVideo);
-
+// All_Video_Lists_With_Subtitle
+Upload_Video.get("/videos", All_Video_Lists_With_Subtitle);
 export default Upload_Video;

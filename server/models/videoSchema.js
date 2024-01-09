@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-  file: Object,
+  filename: String,
 });
 
-const VideoModel = mongoose.model('Video', videoSchema);
+const Video = mongoose.model('Video', videoSchema);
 
-export default VideoModel;
+export default Video;

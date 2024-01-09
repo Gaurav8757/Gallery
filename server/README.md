@@ -1,17 +1,18 @@
-- server
-  - controllers
-    - videoController.js
-    - subtitleController.js
-  - models
-    - Video.js
-    - Subtitle.js
-  - services
-    - videoService.js
-    - subtitleService.js
-  - utils
-    - uploadUtils.js
-  - uploads
-  - server.js
+Video_Uploads/
+|-- models/
+|   |-- video.js
+|   |-- subtitle.js
+|
+|-- controllers/
+|   |-- videoController.js
+|   |-- subtitleController.js
+|
+|-- views/
+|   |-- videoPlayer.html
+|
+|-- uploads/
+|-- app.js
+
 
 
 # Local Server

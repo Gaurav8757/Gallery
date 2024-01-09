@@ -1,24 +1,31 @@
-import SubtitleModel from "../models/subtitleSchema.js";
+import Subtitle from "../models/subtitleSchema.js";
 
-export async function createSubtitles(req, res) {
-  const { videoIndex, text, timestamp } = req.body;
-  const newSubtitle = new SubtitleModel({ videoIndex, text, timestamp });
-
+// upload subtitle
+export const addSubtitle = async (req, res) => {
   try {
-    await newSubtitle.save();
-    return res.status(200).json({ message: 'Subtitles created and stored.' });
+    const videoId = req.params.videoId;
+    const { text, startTime, endTime } = req.body;
+
+    // Save subtitles to the database
+    const subtitle = new Subtitle({ videoId, text, startTime, endTime });
+    await subtitle.save();
+
+    res.status(200).send('Subtitles submitted successfully.');
   } catch (error) {
-    return res.status(500).json({ error: 'Error saving subtitles to the database.' });
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 }
 
-export async function getSubtitles(req, res) {
-  const videoIndex = req.params.videoIndex;
 
+// get subtitle
+export const getSubtitle = async (req, res) => {
   try {
-    const videoSubtitles = await SubtitleModel.find({ videoIndex });
-    return res.status(200).json({ subtitles: videoSubtitles });
+    const videoId = req.params.videoId;
+    const subtitles = await Subtitle.find({ videoId });
+    res.json(subtitles);
   } catch (error) {
-    return res.status(500).json({ error: 'Error retrieving subtitles from the database.' });
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 }
