@@ -15,39 +15,87 @@ const Form = () => {
   };
 
 
+  // // HANDLE UPLOAD VIDEOS
+  // const handleUpload = async () => {
+  //   try {
+  //     if (!selectedFile) {
+  //       setError('Please select a file');
+  //       return;
+  //     }
+  //     const formData = new FormData();
+  //     formData.append('filename', selectedFile);
+
+  //     const response = await axios.post('https://upvideo.onrender.com/video/upload', formData, {
+  //       onUploadProgress: (progressEvent) => {
+  //         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+  //         //  toast.promise(`Upload Progress: ${percentCompleted}%`);
+  //         console.log(`Upload Progress: ${percentCompleted}%`);
+  //       },
+  //     });
+  //     // SUCCRESSFUL RESPONSE
+  //     // Handle success, update state
+  //     if (response.status === 200) {
+  //       toast.success(`${response.data.video.filename} uploaded successfully!!`);
+
+
+  //     } else {
+  //       toast.warn("Failed to upload video");
+
+  //       // Handle error
+  //     }
+  //   } catch (error) {
+  //     toast.error("Error during video upload");
+  //     console.error('Error during file upload:', error);
+  //   }
+  // };
+
   // HANDLE UPLOAD VIDEOS
-  const handleUpload = async () => {
-    try {
-      if (!selectedFile) {
-        setError('Please select a file');
-        return;
-      }
-      const formData = new FormData();
-      formData.append('filename', selectedFile);
-
-      const response = await axios.post('https://upvideo.onrender.com/video/upload', formData, {
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          //  toast.promise(`Upload Progress: ${percentCompleted}%`);
-          console.log(`Upload Progress: ${percentCompleted}%`);
-        },
-      });
-      // SUCCRESSFUL RESPONSE
-      // Handle success, update state
-      if (response.status === 200) {
-        toast.success(`${response.data.video.filename} uploaded successfully!!`);
-
-
-      } else {
-        toast.warn("Failed to upload video");
-
-        // Handle error
-      }
-    } catch (error) {
-      toast.error("Error during video upload");
-      console.error('Error during file upload:', error);
+const handleUpload = async () => {
+  try {
+    if (!selectedFile) {
+      setError('Please select a file');
+      return;
     }
-  };
+    const formData = new FormData();
+    formData.append('filename', selectedFile);
+
+    const response = await axios.post('https://upvideo.onrender.com/video/upload', formData, {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        //  toast.promise(`Upload Progress: ${percentCompleted}%`);
+        console.log(`Upload Progress: ${percentCompleted}%`);
+      },
+    });
+
+    // Handle video upload success
+    if (response.status === 200) {
+      toast.success(`${response.data.video.filename} uploaded successfully!!`);
+
+      // Fetch the videoId from the response
+      const videoId = response.data.video._id;
+
+      // Add subtitles if the subtitles state is not empty
+      if (subtitles.trim() !== '') {
+        const subtitleResponse = await axios.post(`https://upvideo.onrender.com/video/subtitles/${videoId}`, {
+          subtitles: subtitles.trim(),
+        });
+
+        // Handle subtitle addition success
+        if (subtitleResponse.status === 200) {
+          toast.success(`Subtitles added successfully!!`);
+        } else {
+          toast.warn("Failed to add subtitles");
+        }
+      }
+    } else {
+      toast.warn("Failed to upload video");
+      // Handle video upload error
+    }
+  } catch (error) {
+    toast.error("Error during video upload");
+    console.error('Error during file upload:', error);
+  }
+};
   return (
     <section className='mt-5'>
       <div className="grid grid-cols-2 gap-4">

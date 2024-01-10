@@ -27,7 +27,7 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array to run the effect only once on mount
 
-  
+  // eslint-disable-next-line no-unused-vars
   const handleVideoClick = async (videoId) => {
     try {
       const response = await axios.get(`https://upvideo.onrender.com/video/serve/${videoId}`);
@@ -41,7 +41,7 @@ function Home() {
   };
 
   return (
-    <div className='bg-slate-400 h-full'>
+    <div className='bg-slate-400'>
       {videos.length === 0 ? (
         <div className="block justify-center  my-52 items-center">
           <div className='mb-20'>
