@@ -47,7 +47,7 @@ export const ServeVideo = async (req, res) => {
 
     // Check the file extension webm and set the Content-Type accordingly
     if (video.filename.endsWith('.webm')) {
-      contentType = 'video/webm';
+      contentType = 'video/webm' || 'video/mkv';
     }
     if (range) {
       const parts = range.replace(/bytes=/, "").split("-");
@@ -79,8 +79,7 @@ export const ServeVideo = async (req, res) => {
   }
 };
 
-//   save custom subtitles at specific timestamps to the database
-
+//   save custom subtitles at specific timestamps to the "SUBTITLE" SCHEMA
 export const customSubtitles = async (req, res) => {
   try {
     const videoId = req.params.videoId;
@@ -100,6 +99,6 @@ export const customSubtitles = async (req, res) => {
       .json({ message: "Custom subtitle submitted successfully.", subtitle });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: "Internal Server Error", error });
   }
 };
