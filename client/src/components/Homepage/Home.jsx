@@ -27,7 +27,7 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array to run the effect only once on mount
 
-  // eslint-disable-next-line no-unused-vars
+  
   const handleVideoClick = async (videoId) => {
     try {
       const response = await axios.get(`https://upvideo.onrender.com/video/serve/${videoId}`);
