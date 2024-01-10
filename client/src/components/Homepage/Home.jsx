@@ -41,7 +41,7 @@ function Home() {
   };
 
   return (
-    <div>
+    <div className='bg-slate-400 h-full'>
       {videos.length === 0 ? (
         <div className="block justify-center  my-52 items-center">
           <div className='mb-20'>
@@ -54,7 +54,7 @@ function Home() {
           </div>
         </div>
       ) : (
-        <div className="flex max-w-full p-10 gap-4">
+        <div className="flex max-w-full p-10 gap-4 bg-slate-400">
           {videos.map((video) => (
             <div
               key={video.videoId}

@@ -29,7 +29,7 @@ export const VideoPlayer = async (req, res) => {
 };
 
 
-export const ServeVideo = async (req, res) => {
+export const serveVideo = async (req, res) => {
   try {
     const videoId = req.params.videoId;
 
@@ -47,7 +47,7 @@ export const ServeVideo = async (req, res) => {
     }
 
     const videoPath = `uploads/videos/${video.filename}`;
-    const subtitles = await Subtitle.find({ videoId }); // Fetch subtitles associated with the video
+    
     const stat = fs.statSync(videoPath);
     const fileSize = stat.size;
     const range = req.headers.range;
@@ -84,11 +84,6 @@ export const ServeVideo = async (req, res) => {
       res.writeHead(200, head);
       fs.createReadStream(videoPath).pipe(res);
     }
-
-    // Send subtitles along with the video
-    res.json({
-      subtitles: subtitles.map(subtitle => subtitle.text),
-    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
