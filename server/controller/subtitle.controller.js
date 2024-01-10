@@ -17,15 +17,3 @@ export const addSubtitle = async (req, res) => {
   }
 }
 
-
-// get subtitle
-export const getSubtitle = async (req, res) => {
-  try {
-    const videoId = req.params.videoId;
-    const subtitles = await Subtitle.find({ videoId });
-    res.json(subtitles);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-}

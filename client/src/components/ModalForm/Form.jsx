@@ -7,7 +7,7 @@ const Form = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [subtitles, setSubtitles] = useState("");
   const [error, setError] = useState('');
-
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   // HANDLE FILES
   const handleFileChange = (event) => {
@@ -34,15 +34,17 @@ const Form = () => {
       const response = await axios.post('https://upvideo.onrender.com/video/upload', formData, {
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          //  toast.promise(`Upload Progress: ${percentCompleted}%`);
-          console.log(`Upload Progress: ${percentCompleted}%`);
+          setUploadProgress(percentCompleted); // Update upload progress
+          if (percentCompleted === 100) {
+            // Reset the upload progress once it reaches 100%
+            setUploadProgress(0);
+          }
         },
       });
 
       // Handle video upload success
       if (response.status === 200) {
         // toast.success(`${response.data.video.filename} uploaded successfully!!`);
-
         // Fetch the videoId from the response
         const videoId = response.data.video._id;
 
@@ -83,7 +85,27 @@ const Form = () => {
             <input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} />
 
           </label>
-          {error && <p className="mt-2 text-sm text-center  text-red-500">{error}</p>}
+          {/* UPLOAD PROGRESS BAR */}
+          {uploadProgress > 0 && uploadProgress <= 100 && (
+           <div className="flex justify-center items-center mt-4">
+           <span className='text-white mr-3'>Uploading Video:</span>
+           <div className="relative w-16 h-16">
+             <div
+               className="absolute top-0 left-0 text-white bg-green-500 h-full w-full rounded-full"
+               style={{
+                 clipPath: `polygon(0 0, 100% 0%, 100% 100%, 0% ${100 - uploadProgress}%)`,
+               }}
+             ></div>
+             <div className="absolute top-0  left-0 text-white flex items-center justify-center w-full h-full">
+               <span className="text-white font-semibold">{uploadProgress}%</span>
+             </div>
+           </div>
+         </div>
+          )}
+          {/* ERROR MESSAGE */}
+          {error && (
+            <p className="mt-2 text-sm text-center text-red-500">{error}</p>
+          )}
         </div>
         <div>
 

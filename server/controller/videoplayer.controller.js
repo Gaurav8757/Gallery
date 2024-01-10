@@ -126,24 +126,3 @@ export const ListVideosWithSubtitles = async (req, res) => {
   }
 };
 
-// Play a specific video with subtitles
-export const PlayVideoWithSubtitles = async (req, res) => {
-  try {
-    const videoId = req.params.videoId;
-    const video = await Video.findById(videoId);
-
-    if (!video) {
-      res.status(404).json({ message: "Video not found" });
-      return;
-    }
-
-    const videoPath = `uploads/${video.filename}`;
-    const subtitles = await Subtitle.find({ videoId });
-
-    // Return video details along with subtitles
-    res.json({ videoId, videoPath, subtitles });
-  } catch (error) {
-    console.error("Error playing video with subtitles:", error);
-    return res.status(500).json({ message: "Internal Server Error", error });
-  }
-};
