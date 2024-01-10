@@ -18,7 +18,7 @@ export const VideoPlayer = async (req, res) => {
     const subtitles = await Subtitle.find({ videoId });
 
     // Render HTML template
-    res.render("videoPlayer", { videoId, videoPath, subtitles });
+    res.json( { videoId, videoPath, subtitles });
   } catch (error) {
     console.error(
       error,
@@ -100,5 +100,28 @@ export const customSubtitles = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error", error });
+  }
+};
+
+
+// Get a list of all videos with subtitles
+export const ListVideosWithSubtitles = async (req, res) => {
+  try {
+    const videos = await Video.find();
+    const videosWithSubtitles = [];
+
+    for (const video of videos) {
+      const subtitles = await Subtitle.find({ videoId: video._id });
+      videosWithSubtitles.push({
+        videoId: video._id,
+        videoPath: `uploads/${video.filename}`,
+        subtitles,
+      });
+    }
+
+    res.json(videosWithSubtitles);
+  } catch (error) {
+    console.error("Error fetching videos with subtitles:", error);
+    return res.status(500).json({ message: "Internal Server Error", error });
   }
 };
