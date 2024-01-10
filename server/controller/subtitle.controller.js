@@ -4,16 +4,16 @@ import Subtitle from "../models/subtitleSchema.js";
 export const addSubtitle = async (req, res) => {
   try {
     const videoId = req.params.videoId;
-    const { text, startTime, endTime } = req.body;
+    const { text, time } = req.body;
 
     // Save subtitles to the database
-    const subtitle = new Subtitle({ videoId, text, startTime, endTime });
-    await subtitle.save();
-
-    res.status(200).send('Subtitles submitted successfully.');
+    const addSubtitle = new Subtitle({ videoId, text, time});
+    await addSubtitle.save();
+// print raw json 
+    return res.status(200).json({ message: 'Subtitles submitted successfully.', addSubtitle });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    return res.status(500).send('Internal Server Error');
   }
 }
 

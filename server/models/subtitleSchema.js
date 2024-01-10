@@ -2,9 +2,10 @@ import mongoose from 'mongoose';
 
 const subtitleSchema = new mongoose.Schema({
   videoId: String,
-  subtitles: String,
-  startTime: Number,
-  endTime: Number,
+  text: String,
+  specific_subtitles: String,
+  time: Number,
+  
 });
 
 const Subtitle = mongoose.model('Subtitle', subtitleSchema);

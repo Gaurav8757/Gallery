@@ -1,5 +1,5 @@
 import Video from "../models/videoSchema.js";
-
+import Subtitle from "../models/subtitleSchema.js";
 // video upload controller
 
 export const VideoUpload = async (req, res) => {
@@ -39,7 +39,7 @@ export const All_Video_Lists_With_Subtitle = async (req, res) => {
     ]);
 
     res.json(videosWithDetails);
-    //   console.log(videosWithDetails);
+   
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");
