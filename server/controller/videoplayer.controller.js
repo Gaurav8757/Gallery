@@ -28,17 +28,10 @@ export const VideoPlayer = async (req, res) => {
   }
 };
 
-
+//  SERVE VIDEO FILE API
 export const ServeVideo = async (req, res) => {
   try {
     const videoId = req.params.videoId;
-
-    // Validate the videoId (e.g., check if it's a valid ObjectId)
-    if (!isValidObjectId(videoId)) {
-      res.status(400).send("Invalid videoId");
-      return;
-    }
-
     const video = await Video.findById(videoId);
 
     if (!video) {
@@ -47,19 +40,15 @@ export const ServeVideo = async (req, res) => {
     }
 
     const videoPath = `uploads/videos/${video.filename}`;
-    
     const stat = fs.statSync(videoPath);
     const fileSize = stat.size;
     const range = req.headers.range;
     let contentType = 'video/mp4'; // Default to MP4
 
-    // Check the file extension for webm and set the Content-Type accordingly
+    // Check the file extension webm and set the Content-Type accordingly
     if (video.filename.endsWith('.webm')) {
-      contentType = 'video/webm';
-    } else if (video.filename.endsWith('.mkv')) {
-      contentType = 'video/x-matroska';
+      contentType = 'video/webm' || 'video/mkv';
     }
-
     if (range) {
       const parts = range.replace(/bytes=/, "").split("-");
       const start = parseInt(parts[0], 10);
@@ -89,7 +78,6 @@ export const ServeVideo = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
 
 //   save custom subtitles at specific timestamps to the "SUBTITLE" SCHEMA
 export const customSubtitles = async (req, res) => {

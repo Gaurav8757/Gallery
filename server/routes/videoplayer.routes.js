@@ -1,5 +1,5 @@
 import express from 'express';
-import {  ServeVideo, customSubtitles, ListVideosWithSubtitles, PlayVideoWithSubtitles } from '../controller/videoplayer.controller.js';
+import { ServeVideo, customSubtitles, ListVideosWithSubtitles, PlayVideoWithSubtitles } from '../controller/videoplayer.controller.js';
 
 
 const Play_Video = express.Router();
