@@ -29,7 +29,7 @@ export const VideoPlayer = async (req, res) => {
 };
 
 
-export const serveVideo = async (req, res) => {
+export const ServeVideo = async (req, res) => {
   try {
     const videoId = req.params.videoId;
 
