@@ -28,7 +28,7 @@ const Form = () => {
       const response = await axios.post('https://upvideo.onrender.com/video/upload', formData, {
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-           toast.promise(`Upload Progress: ${percentCompleted}%`);
+          //  toast.promise(`Upload Progress: ${percentCompleted}%`);
           console.log(`Upload Progress: ${percentCompleted}%`);
         },
       });
