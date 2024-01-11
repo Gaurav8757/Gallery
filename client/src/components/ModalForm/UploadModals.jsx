@@ -28,7 +28,7 @@ export function UploadModals() {
       </button>
 
       {/* GITHUB PROFILE LINK  */}
-      <Link to="https://github.com/Gaurav8757" target="_blank">
+      <Link to="https://github.com/Gaurav8757/Gallery" target="_blank">
         <FaGithub size={30} color="white" data-tooltip-target="tooltip-bottom" data-tooltip-placement="bottom" /></Link>
       <div id="tooltip-bottom" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-green-700 bg-gray-200 rounded-lg shadow-sm opacity-0 tooltip ">
         Github Profile Link to see Project

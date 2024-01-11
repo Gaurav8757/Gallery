@@ -8,21 +8,29 @@ const Form = () => {
   const [subtitles, setSubtitles] = useState("");
   const [error, setError] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
-
+  const [videoPreview, setVideoPreview] = useState(null);
   // HANDLE FILES
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  
+
+// Display video preview
+if (file && file.type.includes('video')) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    setVideoPreview(reader.result);
   };
-
-
+  reader.readAsDataURL(file);
+} else {
+  setVideoPreview(null);
+}
+  }
+ 
   // HANDLE UPLOAD VIDEOS
   const handleUpload = async () => {
     try {
-      // ERROR NOT INPUT FILE
-      if (!selectedFile) {
-        setError('Please select a file');
-        return;
-      }
+     
       // ERROR NOT INPUT SUBTITLES
       if (!subtitles) {
         setError('Please enter a subtitles');
@@ -76,15 +84,28 @@ const Form = () => {
         <div>
           {/* UPLOAD VIDEO INPUT */}
           <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-00 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <RiVideoUploadLine size={80} className='text-green-400' />
-              <p className="mb-2 text-base text-gray-500 dark:text-gray-400"> drag and drop</p>
-              <span className="text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-2 py-2 text-center me-2 mb-2"> Click to upload</span>
-              <p className="text-xs text-gray-500 dark:text-gray-400">webm, mp4, mkv </p>
-            </div>
+          {videoPreview ? (
+              <div className="relative inset-x-0 flex items-center justify-center">
+                <video width="90%" height="90%" controls>
+                  <source src={videoPreview} type={selectedFile.type} />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <RiVideoUploadLine size={80} className="text-green-400" />
+                <p className="mb-2 text-base text-gray-500 dark:text-gray-400">drag and drop</p>
+                <span className="text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-2 py-2 text-center me-2 mb-2">
+                  Click to upload
+                </span>
+                <p className="text-xs text-gray-500 dark:text-gray-400">webm, mp4, mkv </p>
+              </div>
+            )}
             <input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} />
 
           </label>
+          
+          
           {/* UPLOAD PROGRESS BAR */}
           {uploadProgress > 0 && uploadProgress <= 100 && (
            <div className="flex justify-center items-center mt-4">
@@ -102,10 +123,7 @@ const Form = () => {
            </div>
          </div>
           )}
-          {/* ERROR MESSAGE */}
-          {error && (
-            <p className="mt-2 text-sm text-center text-red-500">{error}</p>
-          )}
+         
         </div>
         <div>
 
@@ -127,7 +145,9 @@ const Form = () => {
               onChange={(e) => setSubtitles(e.target.value)}
             />
           </div>
-
+          {error && (
+            <p className="mt-2 text-sm text-center text-red-500">{error}</p>
+          )}
         </div>
       </div>
       {/* UPLOAD BUTTON */}
