@@ -5,8 +5,7 @@ import { PiUploadSimpleBold } from "react-icons/pi";
 import { RiVideoUploadLine } from "react-icons/ri";
 import {
   CircularProgressbar,
-  CircularProgressbarWithChildren,
-  buildStyles
+ 
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 const Form = () => {
