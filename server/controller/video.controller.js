@@ -3,7 +3,7 @@ import Subtitle from "../models/subtitleSchema.js";
 import cloudinary from "cloudinary";
 import dotenv from "dotenv";
 // video upload controller
-import { v2 as cloudinary } from "cloudinary";
+// import { v2 as cloudinary } from "cloudinary";
 dotenv.config();
 const { CLOUDNARY_CLOUD_NAME, CLOUDNARY_API_KEY, CLOUDNARY_API_SECRET } =
   process.env;
