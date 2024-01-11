@@ -5,7 +5,7 @@ import { PiUploadSimpleBold } from "react-icons/pi";
 import { RiVideoUploadLine } from "react-icons/ri";
 import {
   CircularProgressbar,
- 
+  buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 const Form = () => {
@@ -122,17 +122,20 @@ const Form = () => {
           {/* UPLOAD PROGRESS BAR */}
           {uploadProgress > 0 && uploadProgress <= 100 && (
             <div className="flex justify-center items-center mt-4">
-              <span className='text-white mr-3'>Uploading Video:</span>
-              <CircularProgressbar styles={{width:"20%", height:"20%"}}  value={uploadProgress} text={`${uploadProgress}%`} />
+              <span className='text-white mr-4'>Uploading Video:</span>
+              <div className='w-20 h-20'>
+                <CircularProgressbar styles={buildStyles({
+                  textColor: '#3CD70A ', // Text color
+                  pathColor: '#3CD70A ', // Circular progress bar color
+                  trailColor: '#d6d6d6', // Background trail color
+                  textSize: '25px', // Text size
+                })} value={uploadProgress} text={`${uploadProgress}%`} />
+
+
+              </div>
             </div>
           )}
-          {/* <div className="relative w-32 h-4 bg-gray-300 rounded-full">
-                <div
-                  className="absolute left-0 h-full bg-green-500 rounded-full"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-              <span className="text-white ml-3">{uploadProgress}%</span> */}
+
           {/* ERROR HANDLE INPUT VIDEO */}
           {!selectedFile ? (
             <p className="mt-2 text-sm text-center text-red-500">{videoerror}</p>
