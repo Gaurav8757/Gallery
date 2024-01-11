@@ -114,7 +114,7 @@ const Form = () => {
                 <p className="text-xs text-gray-500 dark:text-gray-400">webm, mp4, mkv </p>
               </div>
             )}
-            <input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} />
+            <input id="dropzone-file" accept='videos/*' type="file" className="hidden" onChange={handleFileChange} />
 
           </label>
 
