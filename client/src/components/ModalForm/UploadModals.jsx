@@ -6,7 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import Form from "./Form";
 export function UploadModals() {
   const [isModalOpen, setModalOpen] = useState(false);
-  
+
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
@@ -18,13 +18,11 @@ export function UploadModals() {
       {/* ADD OR UPLOAD VIDEO TO OPEN MODAL */}
       <button
         onClick={toggleModal}
-        className="flex items-center mr-4 mt-2  text-white bg-gradient-to-r from-green-400 via-green-600 to-green-600 hover:text-black text-xl  hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg  px-5 py-2 text-center  mb-2"
+        className="flex items-center mr-4 mt-2 xl:text-lg  lg:text-lg  md:text-md  sm:text-sm  text-sm  text-white bg-gradient-to-r from-green-400 via-green-600 to-green-600 hover:text-black   hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg  px-3 py-2 text-center  mb-2"
         type="button"
-        // data-modal-target="static-modal-1"
-        // data-modal-toggle="static-modal-1"
       >
         <RiVideoUploadLine size={25} className="mx-2 items-center" />
-        Add File
+        Add Video File
       </button>
 
       {/* GITHUB PROFILE LINK  */}
@@ -66,7 +64,7 @@ export function UploadModals() {
                   <span className="sr-only">Close modal</span>
                 </button>
               </div>
-             
+
               {/* MODAL BODY */}
               <Form />
             </div>
