@@ -4,7 +4,6 @@ import fs from "fs";
 import Subtitle from "../models/subtitleSchema.js";
 import Video from "../models/videoSchema.js";
 
-//  SERVE VIDEO FILE API
 export const ServeVideo = async (req, res) => {
   try {
     const videoId = req.params.videoId;
@@ -23,7 +22,7 @@ export const ServeVideo = async (req, res) => {
 
     // Check the file extension and set the Content-Type accordingly
     const videoExtension = path.extname(video.filename).toLowerCase();
-    const allowedExtensions = /\.(mp4|webm|mkv)$/;
+    const allowedExtensions = /\.(mp4|webm|mkv|avi|mov|flv|wmv)$/; // Add more extensions as needed
 
     if (allowedExtensions.test(videoExtension)) {
       switch (videoExtension) {
@@ -36,6 +35,18 @@ export const ServeVideo = async (req, res) => {
         case '.mkv':
           contentType = 'video/x-matroska'; // MKV format
           break;
+        case '.avi':
+          contentType = 'video/x-msvideo'; // AVI format
+          break;
+        case '.mov':
+          contentType = 'video/quicktime'; // MOV format
+          break;
+        case '.flv':
+          contentType = 'video/x-flv'; // FLV format
+          break;
+        case '.wmv':
+          contentType = 'video/x-ms-wmv'; // WMV format
+          break;
         // Add more cases for additional video formats
         default:
           contentType = 'video/mp4'; // Default to MP4 if extension is not recognized
@@ -44,7 +55,7 @@ export const ServeVideo = async (req, res) => {
       res.status(415).send("Unsupported Media Type");
       return;
     }
-    
+
     if (range) {
       const parts = range.replace(/bytes=/, "").split("-");
       const start = parseInt(parts[0], 10);
