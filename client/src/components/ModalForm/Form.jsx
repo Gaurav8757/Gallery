@@ -3,39 +3,53 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { PiUploadSimpleBold } from "react-icons/pi";
 import { RiVideoUploadLine } from "react-icons/ri";
+import {
+  CircularProgressbar,
+  CircularProgressbarWithChildren,
+  buildStyles
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 const Form = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [subtitles, setSubtitles] = useState("");
   const [error, setError] = useState('');
+  const [videoerror, setVideoError] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
   const [videoPreview, setVideoPreview] = useState(null);
   // HANDLE FILES
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-  
 
-// Display video preview
-if (file && file.type.includes('video')) {
-  const reader = new FileReader();
-  reader.onload = () => {
-    setVideoPreview(reader.result);
-  };
-  reader.readAsDataURL(file);
-} else {
-  setVideoPreview(null);
-}
+
+    // Display video preview
+    if (file && file.type.includes('video')) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setVideoPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setVideoPreview(null);
+    }
   }
- 
+
   // HANDLE UPLOAD VIDEOS
   const handleUpload = async () => {
     try {
-     
+
       // ERROR NOT INPUT SUBTITLES
       if (!subtitles) {
         setError('Please enter a subtitles');
         return;
       }
+
+      // Check if a file is selected
+      if (!selectedFile) {
+        setVideoError('Please select a video file to upload');
+        return;
+      }
+
       const formData = new FormData();
       formData.append('filename', selectedFile);
 
@@ -52,7 +66,7 @@ if (file && file.type.includes('video')) {
 
       // Handle video upload success
       if (response.status === 200) {
-        // toast.success(`${response.data.video.filename} uploaded successfully!!`);
+
         // Fetch the videoId from the response
         const videoId = response.data.video._id;
 
@@ -71,7 +85,7 @@ if (file && file.type.includes('video')) {
         }
       } else {
         toast.warn("Failed to upload video");
-        // Handle video upload error
+        setVideoError("Failed to upload video. Please try again.");
       }
     } catch (error) {
       toast.error("Error during video upload");
@@ -84,9 +98,9 @@ if (file && file.type.includes('video')) {
         <div>
           {/* UPLOAD VIDEO INPUT */}
           <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-00 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-          {videoPreview ? (
+            {videoPreview ? (
               <div className="relative inset-x-0 flex items-center justify-center">
-                <video width="90%" height="90%" controls>
+                <video width="90%" height="90%" >
                   <source src={videoPreview} type={selectedFile.type} />
                   Your browser does not support the video tag.
                 </video>
@@ -104,26 +118,26 @@ if (file && file.type.includes('video')) {
             <input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} />
 
           </label>
-          
-          
+
+
           {/* UPLOAD PROGRESS BAR */}
           {uploadProgress > 0 && uploadProgress <= 100 && (
-           <div className="flex justify-center items-center mt-4">
-           <span className='text-white mr-3'>Uploading Video:</span>
-           <div className="relative w-16 h-16">
-             <div
-               className="absolute top-0 left-0 text-white bg-green-500 h-full w-full rounded-full"
-               style={{
-                 clipPath: `polygon(0 0, 100% 0%, 100% 100%, 0% ${100 - uploadProgress}%)`,
-               }}
-             ></div>
-             <div className="absolute top-0  left-0 text-white flex items-center justify-center w-full h-full">
-               <span className="text-white font-semibold">{uploadProgress}%</span>
-             </div>
-           </div>
-         </div>
+            <div className="flex justify-center items-center mt-4">
+              <span className='text-white mr-3'>Uploading Video:</span>
+              <CircularProgressbar styles={{width:"20%", height:"20%"}}  value={uploadProgress} text={`${uploadProgress}%`} />
+            </div>
           )}
-         
+          {/* <div className="relative w-32 h-4 bg-gray-300 rounded-full">
+                <div
+                  className="absolute left-0 h-full bg-green-500 rounded-full"
+                  style={{ width: `${uploadProgress}%` }}
+                ></div>
+              </div>
+              <span className="text-white ml-3">{uploadProgress}%</span> */}
+          {/* ERROR HANDLE INPUT VIDEO */}
+          {!selectedFile ? (
+            <p className="mt-2 text-sm text-center text-red-500">{videoerror}</p>
+          ) : ""}
         </div>
         <div>
 
@@ -145,9 +159,9 @@ if (file && file.type.includes('video')) {
               onChange={(e) => setSubtitles(e.target.value)}
             />
           </div>
-          {error && (
+          {!subtitles ? (
             <p className="mt-2 text-sm text-center text-red-500">{error}</p>
-          )}
+          ) : ""}
         </div>
       </div>
       {/* UPLOAD BUTTON */}
