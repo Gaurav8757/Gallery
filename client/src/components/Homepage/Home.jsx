@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function Home() {
   const [videos, setVideos] = useState([]);
-
+  const [currentVideo, setCurrentVideo] = useState(null);
   const fetchVideos = async () => {
     try {
       const response = await axios.get('https://upvideo.onrender.com/video/lists');
@@ -26,6 +26,10 @@ function Home() {
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array to run the effect only once on mount
+
+  const handleVideoPlay = (filename) => {
+    setCurrentVideo(filename);
+  };
 
 
   return (
@@ -55,13 +59,18 @@ function Home() {
                   key={video.videoId}
                   className="relative grid overflow-hidden bg-gray-200 rounded-md cursor-pointer"
                 >
-                  <video controls width="900" height="400">
-                    <source src={video.videoPath} type="video/mp4" />
+                  <video controls width="900" height="400" onPlay={() => handleVideoPlay(video.filename)}>
+                    <source src={video.videoPath} type="video/wmv" />
                     {video.text}
                   </video>
                   <div className="p-2">
                     <h3 className="text-md font-semibold text-center">{video.subtitles.map((data) => data.text)}</h3>
                   </div>
+                  {currentVideo === video.filename && (
+                      <div className="absolute bottom-0 left-0 bg-gray-800 text-white p-2 w-full text-center">
+                        {video.filename}
+                      </div>
+                    )}
                 </div>
               ))}
             </div>
