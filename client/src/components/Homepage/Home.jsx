@@ -57,7 +57,7 @@ function Home() {
           <h1 className='text-center text-2xl font-semibold pt-4 '>All Uploaded Videos</h1>
           <div className="flex max-w-full p-10 gap-4 bg-slate-400">
 
-            <div className='grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4  md:grid-cols-3  sm:grid-cols-3  gap-5'>
+            <div className='grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-4  md:grid-cols-3  sm:grid-cols-3  gap-5'>
               {videos.map((video) => (
                 <div
                   key={video.videoId}

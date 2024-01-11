@@ -8,7 +8,7 @@ function Header() {
           {/* LOGO AND TITLE */}
           <div className="flex justify-start ">
             <img src="/logo.png" className="mr-3 h-8 sm:h-9 rounded-lg" alt="logo" />
-            <span className="self-center  h-8 text-2xl font-semibold whitespace-nowrap dark:text-white">Gallery</span>
+            <span className="self-center  h-8 text-2xl font-semibold whitespace-nowrap dark:text-white">VGallery</span>
           </div>
           <UploadModals />
         </div>
