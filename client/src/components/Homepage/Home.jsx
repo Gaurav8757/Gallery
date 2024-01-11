@@ -9,7 +9,7 @@ function Home() {
     try {
       const response = await axios.get('https://upvideo.onrender.com/video/lists');
       setVideos(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -27,15 +27,6 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array to run the effect only once on mount
 
-  // eslint-disable-next-line no-unused-vars
-  const handleVideoClick = async (videoId) => {
-    try {
-      const response = await axios.get(`https://upvideo.onrender.com/video/serve/${videoId}`);
-      const { videoId } = response.data;
-    } catch (error) {
-      console.error('Error fetching video player data:', error);
-    }
-  };
 
   return (
 
@@ -63,10 +54,9 @@ function Home() {
                 <div
                   key={video.videoId}
                   className="relative grid overflow-hidden bg-gray-200 rounded-md cursor-pointer"
-                  onClick={() => handleVideoClick(video.videoId)}
                 >
                   <video controls width="900" height="400">
-                    <source src={`https://upvideo.onrender.com/video/serve/${video.videoId}`} type="video/mp4" />
+                    <source src={video.videoPath} type="video/mp4" />
                     {video.text}
                   </video>
                   <div className="p-2">

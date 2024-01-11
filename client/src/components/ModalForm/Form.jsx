@@ -122,13 +122,13 @@ const Form = () => {
           {/* UPLOAD PROGRESS BAR */}
           {uploadProgress > 0 && uploadProgress <= 100 && (
             <div className="flex justify-center items-center mt-4">
-              <span className='text-white mr-4'>Uploading Video:</span>
-              <div className='w-20 h-20'>
+              <span className='text-white mr-2'>Uploading Video:</span>
+              <div className='w-10 sm:w-10 md:w-16 lg:w-20 xl:w-20 h-10   sm:h-10 md:h-16 lg:h-20 xl:h-20'>
                 <CircularProgressbar styles={buildStyles({
-                  textColor: '#3CD70A ', // Text color
+                  textColor: '#3CD79F ', // Text color
                   pathColor: '#3CD70A ', // Circular progress bar color
                   trailColor: '#d6d6d6', // Background trail color
-                  textSize: '25px', // Text size
+                  textSize: '23px', // Text size
                 })} value={uploadProgress} text={`${uploadProgress}%`} />
 
 
