@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function Home() {
   const [videos, setVideos] = useState([]);
-  const [currentVideo, setCurrentVideo] = useState(null);
+
   const fetchVideos = async () => {
     try {
       const response = await axios.get('https://upvideo.onrender.com/video/lists');
@@ -14,7 +14,7 @@ function Home() {
       console.error('Error fetching data:', error);
     }
   };
-// console.log(videos);
+  // console.log(videos);
   useEffect(() => {
     fetchVideos();
 
@@ -27,9 +27,7 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array to run the effect only once on mount
 
-  const handleVideoPlay = (filename) => {
-    setCurrentVideo(filename);
-  };
+
 
 
   return (
@@ -57,20 +55,31 @@ function Home() {
               {videos.map((video) => (
                 <div
                   key={video.videoId}
-                  className="relative grid overflow-hidden bg-gray-200 rounded-md cursor-pointer"
+                  className="relative grid overflow-hidden bg-gray-300 rounded-md cursor-pointer"
                 >
-                  <video controls width="900" height="400" onPlay={() => handleVideoPlay(video.filename)}>
-                    <source src={video.videoPath} type="video/wmv" />
-                    {video.text}
-                  </video>
+
+                  <div className="relative video-container ">
+
+                    <label className="absolute z-10 text-white  font-semibold mt-4 ml-4">{video.fileName}</label>
+                    <video width="900" height="400" controls>
+
+                      <source src={video.videoPath} type="video/mp4" />
+                      <source src={video.videoPath} type="video/wmv" />
+                      <source src={video.videoPath} type="video/flv" />
+                      <source src={video.videoPath} type="video/webm" />
+                      <source src={video.videoPath} type="video/mkv" />
+                      <source src={video.videoPath} type="video/avi" />
+                      <source src={video.videoPath} type="video/mov" />
+
+                      {video.text}
+                    </video>
+                  </div>
+
+
                   <div className="p-2">
                     <h3 className="text-md font-semibold text-center">{video.subtitles.map((data) => data.text)}</h3>
                   </div>
-                  {currentVideo === video.filename && (
-                      <div className="absolute bottom-0 left-0 bg-gray-800 text-white p-2 w-full text-center">
-                        {video.filename}
-                      </div>
-                    )}
+
                 </div>
               ))}
             </div>
