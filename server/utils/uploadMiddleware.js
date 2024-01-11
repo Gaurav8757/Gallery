@@ -4,16 +4,8 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
-import { v2 as cloudinary } from "cloudinary";
-dotenv.config();
 
-const { CLOUDNARY_CLOUD_NAME, CLOUDNARY_API_KEY, CLOUDNARY_API_SECRET } =
-  process.env;
-cloudinary.config({
-  cloud_name: CLOUDNARY_CLOUD_NAME,
-  api_key: CLOUDNARY_API_KEY,
-  api_secret: CLOUDNARY_API_SECRET,
-});
+
 
 // Get the directory name of the current module file
 const currentModuleFile = fileURLToPath(import.meta.url);
