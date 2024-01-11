@@ -15,13 +15,13 @@ export const videoUploadPath = path.join(__dirname, "../uploads/videos");
 
 // Define a function to filter files to only accept video files
 const videoFilter = (req, file, cb) => {
-  const allowedExtensions = /\.(mp4|mov|avi|mkv)$/;
+  const allowedExtensions = /\.(mp4|mov|avi|mkv|webm|flv|wmv|mpeg|mpg|3gp)$/;
 
   if (!allowedExtensions.test(path.extname(file.originalname).toLowerCase())) {
     return cb(
       new multer.MulterError(
         "LIMIT_UNEXPECTED_FILE",
-        "Only video files (mp4, mov, avi, mkv) are allowed."
+        "Only video files (mp4, mov, avi, mkv, webm, flv, wmv, mpeg, mpg, 3gp) are allowed."
       ),
       false
     );
@@ -29,6 +29,7 @@ const videoFilter = (req, file, cb) => {
 
   cb(null, true);
 };
+
 
 const storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {

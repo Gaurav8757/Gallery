@@ -13,7 +13,7 @@ function Home() {
       console.error('Error fetching data:', error);
     }
   };
-console.log(videos);
+// console.log(videos);
   useEffect(() => {
     fetchVideos();
 

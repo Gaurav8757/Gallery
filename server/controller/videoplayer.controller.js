@@ -14,17 +14,36 @@ export const ServeVideo = async (req, res) => {
       res.status(404).send("Video not found");
       return;
     }
-
     const videoPath = `uploads/videos/${video.filename}`;
     const stat = fs.statSync(videoPath);
     const fileSize = stat.size;
     const range = req.headers.range;
     let contentType = 'video/mp4'; // Default to MP4
 
-    // Check the file extension webm and set the Content-Type accordingly
-    if (video.filename.endsWith('.webm')) {
-      contentType = 'video/webm' || 'video/mkv';
+    // Check the file extension and set the Content-Type accordingly
+    const videoExtension = path.extname(video.filename).toLowerCase();
+    const allowedExtensions = /\.(mp4|webm|mkv)$/;
+
+    if (allowedExtensions.test(videoExtension)) {
+      switch (videoExtension) {
+        case '.mp4':
+          contentType = 'video/mp4';
+          break;
+        case '.webm':
+          contentType = 'video/webm';
+          break;
+        case '.mkv':
+          contentType = 'video/x-matroska'; // MKV format
+          break;
+        // Add more cases for additional video formats
+        default:
+          contentType = 'video/mp4'; // Default to MP4 if extension is not recognized
+      }
+    } else {
+      res.status(415).send("Unsupported Media Type");
+      return;
     }
+    
     if (range) {
       const parts = range.replace(/bytes=/, "").split("-");
       const start = parseInt(parts[0], 10);
