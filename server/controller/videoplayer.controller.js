@@ -4,30 +4,6 @@ import fs from "fs";
 import Subtitle from "../models/subtitleSchema.js";
 import Video from "../models/videoSchema.js";
 
-// play video with subtitles
-export const VideoPlayer = async (req, res) => {
-  try {
-    const videoId = req.params.videoId;
-    const video = await Video.findById(videoId);
-
-    if (!video) {
-      res.status(404).send("Video not found");
-      return;
-    }
-    const videoPath = `uploads/${video.filename}`;
-    const subtitles = await Subtitle.find({ videoId });
-
-    // Render HTML template
-    res.json( { videoId, videoPath, subtitles });
-  } catch (error) {
-    console.error(
-      error,
-      "Render template needed so it can change in react path when connect"
-    );
-    return res.status(500).json({ message: "Internal Server Error", error });
-  }
-};
-
 //  SERVE VIDEO FILE API
 export const ServeVideo = async (req, res) => {
   try {
@@ -79,6 +55,30 @@ export const ServeVideo = async (req, res) => {
   }
 };
 
+
+// Get a list of all videos with subtitles
+export const ListVideosWithSubtitles = async (req, res) => {
+  try {
+    const videos = await Video.find();
+    const videosWithSubtitles = [];
+
+    for (const video of videos) {
+      const subtitles = await Subtitle.find({ videoId: video._id });
+      videosWithSubtitles.push({
+        videoId: video._id,
+        videoPath: `uploads/${video.filename}`,
+        fileName: video.filename, //adding video filename
+        subtitles,
+      });
+    }
+
+    res.json(videosWithSubtitles);
+  } catch (error) {
+    console.error("Error fetching videos with subtitles:", error);
+    return res.status(500).json({ message: "Internal Server Error", error });
+  }
+};
+
 //   save custom subtitles at specific timestamps to the "SUBTITLE" SCHEMA
 export const customSubtitles = async (req, res) => {
   try {
@@ -104,25 +104,5 @@ export const customSubtitles = async (req, res) => {
 };
 
 
-// Get a list of all videos with subtitles
-export const ListVideosWithSubtitles = async (req, res) => {
-  try {
-    const videos = await Video.find();
-    const videosWithSubtitles = [];
 
-    for (const video of videos) {
-      const subtitles = await Subtitle.find({ videoId: video._id });
-      videosWithSubtitles.push({
-        videoId: video._id,
-        videoPath: `uploads/${video.filename}`,
-        subtitles,
-      });
-    }
-
-    res.json(videosWithSubtitles);
-  } catch (error) {
-    console.error("Error fetching videos with subtitles:", error);
-    return res.status(500).json({ message: "Internal Server Error", error });
-  }
-};
 
