@@ -2,8 +2,7 @@ import Video from "../models/videoSchema.js";
 import Subtitle from "../models/subtitleSchema.js";
 import cloudinary from "cloudinary";
 import dotenv from "dotenv";
-// video upload controller
-// import { v2 as cloudinary } from "cloudinary";
+
 dotenv.config();
 const { CLOUDNARY_CLOUD_NAME, CLOUDNARY_API_KEY, CLOUDNARY_API_SECRET } =
   process.env;
@@ -30,7 +29,7 @@ export const VideoUpload = async (req, res) => {
       .json({ message: "File uploaded successfully.", video });
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).json({message:"Internal Server Error", error});
   }
 };
 
