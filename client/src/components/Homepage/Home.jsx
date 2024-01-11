@@ -9,6 +9,7 @@ function Home() {
     try {
       const response = await axios.get('https://upvideo.onrender.com/video/lists');
       setVideos(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }

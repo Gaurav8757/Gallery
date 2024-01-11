@@ -14,7 +14,8 @@ export const ServeVideo = async (req, res) => {
       res.status(404).send("Video not found");
       return;
     }
-    const videoPath = `uploads/videos/${video.filename}`;
+    // const videoPath = `uploads/videos/${video.filename}`;
+    const videoPath = video.cloudinaryUrl;
     const stat = fs.statSync(videoPath);
     const fileSize = stat.size;
     const range = req.headers.range;
@@ -85,7 +86,8 @@ export const ListVideosWithSubtitles = async (req, res) => {
       const subtitles = await Subtitle.find({ videoId: video._id });
       videosWithSubtitles.push({
         videoId: video._id,
-        videoPath: `uploads/${video.filename}`,
+        // videoPath: `uploads/${video.filename}`,
+        videoPath: video.cloudinaryUrl,
         fileName: video.filename, //adding video filename
         subtitles,
       });
