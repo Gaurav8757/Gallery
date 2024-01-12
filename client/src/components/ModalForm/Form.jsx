@@ -130,8 +130,8 @@ const Form = () => {
               <div className='w-16   h-16'>
                 <CircularProgressbar styles={buildStyles({
                   textColor: '#3CD79F ', // Text color
-                  pathColor: '#3CD70A ', // Circular progress bar color
-                  trailColor: '#d6d6d6', // Background trail color
+                  pathColor:  '#1F3D', // Circular progress bar color
+                  trailColor: 'white', // Background trail color
                   textSize: '23px', // Text size
                 })} value={uploadProgress} text={`${uploadProgress}%`} />
 

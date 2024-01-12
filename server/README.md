@@ -1,17 +1,41 @@
-Video_Uploads/
+SERVER(Video_Uploads)/
+|
+|-- database
+|   |-- connection.js
+|
+|
 |-- models/
-|   |-- video.js
-|   |-- subtitle.js
+|   |-- videoSchema.js
+|   |-- subtitleSchema.js
+|
 |
 |-- controllers/
 |   |-- videoController.js
 |   |-- subtitleController.js
+|   |-- videoplayerController.js
 |
-|-- views/
-|   |-- videoPlayer.html
+|
+|-- routes/
+|   |-- routes.js
+|           |-- subtitleRoute.js
+|           |-- videoRoute.js
+|           |-- videoplayer.routes.js
+|
+|
+|-- utils/
+|     |-- middleware(multer)
+|
 |
 |-- uploads/
-|-- app.js
+|        |-- videos
+|
+|
+|-- .gitignore/
+|       |-- .env
+|       |-- node_modules
+|
+|
+|-- index.js
 
 
 
@@ -23,13 +47,18 @@ http://localhost:3001/video/upload
 ```
 ```
 2. Upload Subtitles
-http://localhost:3001/video/subtitles
+http://localhost:3001/video/subtitles/:videoId
 
 ```
 
 ```
-3. Get Subtitles
-http://localhost:3001/video/subtitles/:videoIndex
+3. Add Custom Subtitles
+http://localhost:3001/video/custom-subtitle/:videoId
 
 ```
-      
+
+```
+4. List of Video url, Caption, Custom Subtitles, videoId
+http://localhost:3001/video/lists
+
+```

@@ -2,19 +2,19 @@
 import { useState, useEffect } from 'react';
 import ViewSubtitle from '../SubtitleBanner/ViewSubtitle.jsx';
 import axios from 'axios';
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 function Home() {
   const [videos, setVideos] = useState([]);
   const [customSubtitles, setCustomSubtitles] = useState("");
-
+  const [error, setError] = useState('');
   // LISTS OF VIDEO URL, SUBTITLES AS TEXT NAME , FILENAME, 
   const fetchVideos = async () => {
     try {
       const response = await axios.get('https://upvideo.onrender.com/video/lists');
       setVideos(response.data);
 
-    
+
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -32,16 +32,18 @@ function Home() {
 
 
 
-// HANDLE CUSTOM-SUBTITLE ON VIDEO ADDED
+  // HANDLE CUSTOM-SUBTITLE ON VIDEO ADDED
   const handleSubtitle = async (videoId) => {
     try {
-      // Assuming you have the custom subtitle endpoint as http://localhost:3001/video/custom-subtitle/:videoId
-      const response = await axios.post(`http://localhost:3001/video/custom-subtitle/${videoId}`, {
+      // CHECK IF VIDEO FILE IS NOT SELECTED
+      if (!customSubtitles) {
+        setError('Please enter a subtitles');
+        return;
+      }
+      const response = await axios.post(`https://upvideo.onrender.com/video/custom-subtitle/${videoId}`, {
         specific_subtitles: customSubtitles,
       });
-toast.success(response.data.message);
-      
-      // Optionally, you can update the state or perform any other action upon successful submission
+      toast.success(response.data.message);
     } catch (error) {
 
       toast.error("Error adding custom Subtitles");
@@ -66,8 +68,8 @@ toast.success(response.data.message);
           <span className=" flex justify-center items-center text-center mt-4 font-semibold text-3xl ">Loading.....</span></>
       ) : (
         <>
-          <h1 className='text-center text-2xl font-semibold pt-4 '>All Uploaded Videos</h1>
-          <div className="block max-w-auto p-10 gap-4 bg-slate-400">
+          <h1 className='text-center text-2xl font-semibold pt-4 text-black '>All Uploaded Videos</h1>
+          <div className="block max-w-auto p-8 gap-4 bg-slate-400">
 
             <div className='grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-4  md:grid-cols-3  sm:grid-cols-3  gap-5'>
               {/* ITERATE OVER VIDEOS API */}
@@ -89,9 +91,9 @@ toast.success(response.data.message);
                       {video.text}
                       <h3 className="text-md font-semibold text-center">{video.subtitles.map((data) => data.text)}</h3>
                     </video>
-                    <ViewSubtitle/>
-                  {/* TEXT AREA UPLOAD CUSTOM_SUBTITLES */}
-                  <p className='text-center'>Add Custom Subtitle</p>
+                    <ViewSubtitle />
+                    {/* TEXT AREA UPLOAD CUSTOM_SUBTITLES */}
+                    <p className='text-center'>Add Custom Subtitle</p>
                     <textarea
                       type="text"
                       id="custom_subtitles"
@@ -102,10 +104,13 @@ toast.success(response.data.message);
                       name='custom_subtitles'
                       onChange={(e) => setCustomSubtitles(e.target.value)}
                     />
+                    {!customSubtitles ? (
+                      <p className="mt-1 text-sm text-center text-red-700">{error}</p>
+                    ) : ""}
                     {/* ADD CUSTOM SUBTITLES BUTTON */}
                     <div className='flex justify-center'>
-                    <button onClick={() => handleSubtitle(video.videoId)} className="text-white  mt-2 text-center inline-flex justify-center items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2 me-2  dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" >Add Subtitles</button>
-                  </div>
+                      <button onClick={() => handleSubtitle(video.videoId)} className="text-white  mt-2 text-center inline-flex justify-center items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2 me-2  dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" >Add Subtitle</button>
+                    </div>
                   </div>
                 </div>
               ))}

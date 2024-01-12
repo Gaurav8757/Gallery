@@ -4,6 +4,7 @@ import cloudinary from "cloudinary";
 import dotenv from "dotenv";
 
 dotenv.config();
+// CONFIG CLOUDNARY 
 const { CLOUDNARY_CLOUD_NAME, CLOUDNARY_API_KEY, CLOUDNARY_API_SECRET } =
   process.env;
 cloudinary.config({
@@ -12,15 +13,16 @@ cloudinary.config({
   api_secret: CLOUDNARY_API_SECRET,
 });
 
+// UPLOAD VIDEO CONTROLLER
 export const VideoUpload = async (req, res) => {
   try {
-     // Upload video to Cloudinary
+     // UPLOAD VIDEO TO CLOUDNARY
      const cloudinaryResult = await cloudinary.v2.uploader.upload(req.file.path, {
       resource_type: "video",
       folder:"video"
-      // You can add more options here
+      
     });
-    // Process video file and save video details to the database
+    // PROCESS VIDEO FILE AND SAVE VIDEO DETAILS TO THE DATABASE
     const video = new Video({ filename: req.file.filename, cloudinaryUrl: cloudinaryResult.secure_url, });
     await video.save();
 

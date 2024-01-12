@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+// SUBTITLES SCHEMA
 const subtitleSchema = new mongoose.Schema({
   videoId: String,
   text: String,

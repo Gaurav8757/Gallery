@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// VIDEO SCHEMA
 const videoSchema = new mongoose.Schema({
   filename: String,
   cloudinaryUrl: String,

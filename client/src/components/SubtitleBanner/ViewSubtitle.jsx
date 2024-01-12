@@ -4,12 +4,12 @@ import axios from 'axios';
 
 const ViewSubtitle = () => {
   const [messages, setMessages] = useState([]);
-//   const [scrollIndex, setScrollIndex] = useState(0);
+ 
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get('https://upvideo.onrender.com/video/lists');
+        const response = await axios.post('https://upvideo.onrender.com/video/lists');
         setMessages(response.data.map((subtitle) => 
         subtitle.subtitles
         

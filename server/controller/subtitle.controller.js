@@ -1,15 +1,14 @@
 import Subtitle from "../models/subtitleSchema.js";
 import Video from "../models/videoSchema.js";
-// upload subtitle
+// UPLOAD SUBTITLES
 export const addSubtitle = async (req, res) => {
   try {
     const videoId = req.params.videoId;
     const { text, time } = req.body;
 
-    // Save subtitles to the database
+    // SAVE SUBTITLES TO THE DATABASE
     const addSubtitle = new Subtitle({ videoId, text, time});
     await addSubtitle.save();
-// print raw json 
     return res.status(200).json({ message: 'Subtitles submitted successfully.', addSubtitle });
   } catch (error) {
     console.error(error);
@@ -17,27 +16,25 @@ export const addSubtitle = async (req, res) => {
   }
 }
 
-// Function to get current time in HH:MM:SS format
+// FUNCTION TO GET CURRENT TIME IN HH:MM:SS FORMAT
 function getCurrentTime() {
   const now = new Date();
   let hours = now.getHours();
   const amPm = hours >= 12 ? 'PM' : 'AM';
   
-  hours = hours % 12 || 12; // Convert 24-hour format to 12-hour format
+  hours = hours % 12 || 12; // CONVERT 24-HOUR FORMAT TO 12-HOUR FORMAT
   const minutes = now.getMinutes().toString().padStart(2, '0');
   const seconds = now.getSeconds().toString().padStart(2, '0');
-  
-  // console.log(`${hours}:${minutes}:${seconds} ${amPm}`);
   return `${hours}:${minutes}:${seconds} ${amPm}`;
 }
 
-// save custom subtitles at specific timestamps to the "SUBTITLE" SCHEMA
+// SAVE CUSTOM SUBTITLES AT SPECIFIC TIMESTAMPS TO THE "SUBTITLE" SCHEMA
 export const customSubtitles = async (req, res) => {
   try {
     const videoId = req.params.videoId;
     const { specific_subtitles } = req.body;
 
-    // Save custom subtitle to the database
+    // SAVE CUSTOM SUBTITLES TO THE DATABASE
     const custom_subtitle = new Subtitle({
       videoId,
       specific_subtitles,

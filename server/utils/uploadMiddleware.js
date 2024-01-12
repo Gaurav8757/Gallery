@@ -1,3 +1,4 @@
+// VIDEO UPLOAD MIDDLEWARE MULTER
 import multer from "multer";
 import dotenv from "dotenv";
 
@@ -7,13 +8,13 @@ import path from "path";
 
 
 
-// Get the directory name of the current module file
+// GET THE DIRECTORY NAME OF THE CURRENT MODULE FILE
 const currentModuleFile = fileURLToPath(import.meta.url);
 const __dirname = dirname(currentModuleFile);
 
 export const videoUploadPath = path.join(__dirname, "../uploads/videos");
 
-// Define a function to filter files to only accept video files
+// DEFINE A FUNCTION TO FILTER FILES TO ONLY ACCEPT VIDEO FILES
 const videoFilter = (req, file, cb) => {
   const allowedExtensions = /\.(mp4|mov|avi|mkv|webm|flv|wmv|mpeg|mpg|3gp)$/;
 
@@ -33,12 +34,12 @@ const videoFilter = (req, file, cb) => {
 
 const storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Construct the upload path using path.join
+    // CONSTRUCT THE UPLOAD PATH USING PATH.JOIN
     const uploadPath = videoUploadPath;
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    // Use a more robust method for generating unique filenames
+    // USE A MORE ROBUST METHOD FOR GENERATING UNIQUE FILENAMES
     const uniqueFilename = `${Date.now()}-${Math.round(
       Math.random() * 1e9
     )}${path.extname(file.originalname)}`;
@@ -48,7 +49,7 @@ const storageConfig = multer.diskStorage({
 
 const uploadFile = multer({
   storage: storageConfig,
-  fileFilter: videoFilter, // Use the video filter
-}).single("filename"); // Use .single() if you are expecting a single file with the field name 'filename'
+  fileFilter: videoFilter, // USE THE VIDEO FILTER
+}).single("filename"); // USE .single() EXPECTING A SINGLE FILE WITH FIELD NAME 'filename'
 
 export default uploadFile;
