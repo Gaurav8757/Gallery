@@ -22,11 +22,6 @@ CLIENT(Video_Show)/
 |    |        |-- ModalForm/
 |    |        |    |-- Form.jsx
 |    |        |    |-- UploadModals.jsx
-|    |        |
-|    |        |-- Subtitle/
-|    |        |    |-- ViewSubtitle.jsx
-|    |        
-|    |
 |    |
 |    |-- App.jsx
 |    |-- main.jsx

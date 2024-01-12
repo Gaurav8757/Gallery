@@ -5,6 +5,7 @@ const subtitleSchema = new mongoose.Schema({
   text: String,
   title: [
     {
+      videoId: String,
       specific_subtitles: String,
       time: String,
     },

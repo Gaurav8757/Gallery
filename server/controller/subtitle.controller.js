@@ -39,8 +39,10 @@ export const customSubtitles = async (req, res) => {
       videoId,
       title: [
         {
+          videoId,
           specific_subtitles,
           time: getCurrentTime(),
+          
         },
       ],
     });
