@@ -87,7 +87,9 @@ function Home() {
                   <div className="relative  video-container "
                   >
                     <div onMouseEnter={() => setHoveredVideo(video.videoId)} onMouseLeave={() => setHoveredVideo(null)}>
-                      <label className="absolute z-10 text-white  font-semibold mt-4 ml-4">{video.subtitles.map((data) => data.text)} {video.fileName}</label>
+                    {hoveredVideo === video.videoId && (
+                      <label className="absolute text-sm z-10 text-white  font-semibold mt-4 ml-4">{video.subtitles.map((data) => data.text)} {video.fileName}</label>
+                    )}
                       {/* PLAY VIDEO & SOURCE TAG */}
                       <video width="900" height="400" controls  >
                         <source src={video.videoPath} type="video/mp4" />

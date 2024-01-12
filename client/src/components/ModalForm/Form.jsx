@@ -83,8 +83,7 @@ const Form = () => {
           if (subtitleResponse.status === 200) {
             toast.success(`Video uploaded successfully!!`);
             setSubtitles("");
-            setSelectedFile("");
-            setVideoPreview("");
+           
           } else {
             toast.warn("Failed to add subtitles");
           }
@@ -118,7 +117,7 @@ const Form = () => {
                 <span className="text-black bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-2 py-2 text-center me-2 mb-2">
                   Click to upload
                 </span>
-                <p className="text-xs text-gray-500 dark:text-gray-400">webm, mp4, mkv </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">webm, mp4, mkv, wvm </p>
               </div>
             )}
             <input id="dropzone-file" accept='videos/*' type="file" className="hidden" onChange={handleFileChange} />
