@@ -57,8 +57,6 @@ function Home() {
   };
 
 
-
-
   return (
     <div className='bg-slate-400 h-screen'>
       {/* CHECK IF LENGTH OF VIDEOS IS 0 SHOW LOADING OTHERWISE LISTS OF VIDEOS */}
@@ -84,27 +82,24 @@ function Home() {
 
                 <div
                   key={video.videoId}
-
                   className="relative grid overflow-hidden bg-transparent border-zinc-900 border p-2 rounded-md cursor-pointer">
-
-
-                  <div className="relative  video-container " onMouseEnter={() => setHoveredVideo(video.videoId)}
-                    onMouseLeave={() => setHoveredVideo(null)}>
-                    <label className="absolute z-10 text-white  font-semibold mt-4 ml-4">{video.subtitles.map((data) => data.text)} {video.fileName}</label>
-                    {/* PLAY FILE WIT VIDEO & SOURCE TAG */}
-
-                    <video width="900" height="400" controls >
-
-                      <source src={video.videoPath} type="video/mp4" />
-                      <source src={video.videoPath} type="video/wmv" />
-                      <source src={video.videoPath} type="video/flv" />
-                      <source src={video.videoPath} type="video/webm" />
-                      <source src={video.videoPath} type="video/mkv" />
-                      <source src={video.videoPath} type="video/avi" />
-                      <source src={video.videoPath} type="video/mov" />
-                      {video.text}
-                    </video>
-
+                  {/* HANDLE HOVER */}
+                  <div className="relative  video-container "
+                  >
+                    <div onMouseEnter={() => setHoveredVideo(video.videoId)} onMouseLeave={() => setHoveredVideo(null)}>
+                      <label className="absolute z-10 text-white  font-semibold mt-4 ml-4">{video.subtitles.map((data) => data.text)} {video.fileName}</label>
+                      {/* PLAY VIDEO & SOURCE TAG */}
+                      <video width="900" height="400" controls  >
+                        <source src={video.videoPath} type="video/mp4" />
+                        <source src={video.videoPath} type="video/wmv" />
+                        <source src={video.videoPath} type="video/flv" />
+                        <source src={video.videoPath} type="video/webm" />
+                        <source src={video.videoPath} type="video/mkv" />
+                        <source src={video.videoPath} type="video/avi" />
+                        <source src={video.videoPath} type="video/mov" />
+                        {video.text}
+                      </video>
+                    </div>
                     {/* SUBTITLES DISPLAY  ON VIDEO ON HOVER */}
                     {hoveredVideo === video.videoId && (
                       <label className=' -my-40 absolute text-yellow-100 w-full h-20 overflow-y-auto  z-10 border-slate-600 rounded-md '>
@@ -123,32 +118,27 @@ function Home() {
                       </label>
                     )}
 
+                    {/* TEXT AREA UPLOAD CUSTOM_SUBTITLES */}
+                    <p className='text-center mt-5'>Add Custom Subtitle</p>
+                    <textarea
+                      type="text"
+                      id="custom_subtitles"
+                      rows={4}
+                      maxLength={100}
+                      className=" rounded-md bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Enter Subtitles"
+                      name='custom_subtitles'
+                      onChange={(e) => setCustomSubtitles(e.target.value)}
+                    />
 
-                    {/* SHOWING CUSTOM SUBTITLES */}
-
+                    {!customSubtitles ? (
+                      <p className="mt-1 text-sm text-center text-red-700">{error}</p>
+                    ) : ""}
+                    {/* ADD CUSTOM SUBTITLES BUTTON */}
+                    <div className='flex justify-center'>
+                      <button onClick={() => handleSubtitle(video.videoId)} className="text-white  mt-2 text-center inline-flex justify-center items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2 me-2  dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" >Add Subtitle</button>
+                    </div>
                   </div>
-
-                  {/* TEXT AREA UPLOAD CUSTOM_SUBTITLES */}
-                  <p className='text-center mt-5'>Add Custom Subtitle</p>
-                  <textarea
-                    type="text"
-                    id="custom_subtitles"
-                    rows={4}
-                    maxLength={100}
-                    className=" rounded-md bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Enter Subtitles"
-                    name='custom_subtitles'
-                    onChange={(e) => setCustomSubtitles(e.target.value)}
-                  />
-                  {/* {console.log(video.subtitles.map((data) => data.title))} */}
-                  {!customSubtitles ? (
-                    <p className="mt-1 text-sm text-center text-red-700">{error}</p>
-                  ) : ""}
-                  {/* ADD CUSTOM SUBTITLES BUTTON */}
-                  <div className='flex justify-center'>
-                    <button onClick={() => handleSubtitle(video.videoId)} className="text-white  mt-2 text-center inline-flex justify-center items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2 me-2  dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" >Add Subtitle</button>
-                  </div>
-                  {/* <ViewSubtitle/> */}
                 </div>
 
               ))}
