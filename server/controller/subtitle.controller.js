@@ -37,9 +37,12 @@ export const customSubtitles = async (req, res) => {
     // SAVE CUSTOM SUBTITLES TO THE DATABASE
     const custom_subtitle = new Subtitle({
       videoId,
-      specific_subtitles,
-      time: getCurrentTime(),
-      
+      title: [
+        {
+          specific_subtitles,
+          time: getCurrentTime(),
+        },
+      ],
     });
     await custom_subtitle.save();
 
