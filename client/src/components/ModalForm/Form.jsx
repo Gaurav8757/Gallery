@@ -82,6 +82,9 @@ const Form = () => {
           // Handle subtitle addition success
           if (subtitleResponse.status === 200) {
             toast.success(`Video uploaded successfully!!`);
+            setSubtitles("");
+            setSelectedFile("");
+            setVideoPreview("");
           } else {
             toast.warn("Failed to add subtitles");
           }

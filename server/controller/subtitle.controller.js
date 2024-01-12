@@ -19,13 +19,23 @@ export const addSubtitle = async (req, res) => {
 // FUNCTION TO GET CURRENT TIME IN HH:MM:SS FORMAT
 function getCurrentTime() {
   const now = new Date();
-  let hours = now.getHours();
-  const amPm = hours >= 12 ? 'PM' : 'AM';
-  
-  hours = hours % 12 || 12; // CONVERT 24-HOUR FORMAT TO 12-HOUR FORMAT
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  const seconds = now.getSeconds().toString().padStart(2, '0');
-  return `${hours}:${minutes}:${seconds} ${amPm}`;
+
+  // Get the UTC hours
+  let hoursUTC = now.getUTCHours();
+  // Convert UTC hours to IST hours
+  let hoursIST = (hoursUTC + 5) % 24; // Adding 5 hours for IST
+
+  // Adjust for midnight
+  if (hoursIST < 0) {
+    hoursIST += 24;
+  }
+  const amPm = hoursIST >= 12 ? 'PM' : 'AM';
+
+  hoursIST = hoursIST % 12 || 12; // CONVERT 24-HOUR FORMAT TO 12-HOUR FORMAT
+  const minutes = now.getUTCMinutes().toString().padStart(2, '0');
+  const seconds = now.getUTCSeconds().toString().padStart(2, '0');
+
+  return `${hoursIST}:${minutes}:${seconds} ${amPm}`;
 }
 
 // SAVE CUSTOM SUBTITLES AT SPECIFIC TIMESTAMPS TO THE "SUBTITLE" SCHEMA
