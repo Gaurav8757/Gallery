@@ -1,3 +1,8 @@
+# client
+
+
+
+
 # Server
 
 SERVER(Video_Uploads)/
@@ -63,8 +68,4 @@ http://localhost:3001/video/custom-subtitle/:videoId
 http://localhost:3001/video/lists
 
 ```
-```
-5. 
-http://localhost:3001/video/serve/:videoId
 
-```
