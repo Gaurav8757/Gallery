@@ -1,21 +1,25 @@
 // ALL UPLOADED VIDEOS SHOWS IN A GRID LISTS ALSO PLAY
 import { useState, useEffect } from 'react';
+import ViewSubtitle from '../SubtitleBanner/ViewSubtitle.jsx';
 import axios from 'axios';
-
+import {toast} from "react-toastify";
 
 function Home() {
   const [videos, setVideos] = useState([]);
-// LISTS OF VIDEO URL, SUBTITLES AS TEXT NAME , FILENAME, 
+  const [customSubtitles, setCustomSubtitles] = useState("");
+
+  // LISTS OF VIDEO URL, SUBTITLES AS TEXT NAME , FILENAME, 
   const fetchVideos = async () => {
     try {
       const response = await axios.get('https://upvideo.onrender.com/video/lists');
       setVideos(response.data);
-      console.log(response.data);
+
+    
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
- 
+
   useEffect(() => {
     fetchVideos();
     //SET UP AN INTERVAL TO FETCH VIDEOS EVERY, FOR EXAMPLE, 8 SECONDS
@@ -25,8 +29,25 @@ function Home() {
     //CLEAN UP THE INTERVAL WHEN THE COMPONENT IS UNMOUNTED
     return () => clearInterval(intervalId);
   }, []); // EMPTY DEPENDENCY ARRAY TO RUN THE EFFECT ONLY ONCE ON MOUNT
- 
 
+
+
+// HANDLE CUSTOM-SUBTITLE ON VIDEO ADDED
+  const handleSubtitle = async (videoId) => {
+    try {
+      // Assuming you have the custom subtitle endpoint as http://localhost:3001/video/custom-subtitle/:videoId
+      const response = await axios.post(`http://localhost:3001/video/custom-subtitle/${videoId}`, {
+        specific_subtitles: customSubtitles,
+      });
+toast.success(response.data.message);
+      
+      // Optionally, you can update the state or perform any other action upon successful submission
+    } catch (error) {
+
+      toast.error("Error adding custom Subtitles");
+      console.error('Error adding custom Subtitles:', error);
+    }
+  };
 
   return (
     <div className='bg-slate-400 h-screen'>
@@ -46,15 +67,15 @@ function Home() {
       ) : (
         <>
           <h1 className='text-center text-2xl font-semibold pt-4 '>All Uploaded Videos</h1>
-          <div className="flex max-w-full p-10 gap-4 bg-slate-400">
+          <div className="block max-w-auto p-10 gap-4 bg-slate-400">
 
             <div className='grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-4  md:grid-cols-3  sm:grid-cols-3  gap-5'>
               {/* ITERATE OVER VIDEOS API */}
               {videos.map((video) => (
                 <div
                   key={video.videoId}
-                  className="relative grid overflow-hidden bg-gray-300 rounded-md cursor-pointer">
-                  <div className="relative video-container ">
+                  className="relative grid overflow-hidden bg-transparent border-zinc-900 border p-2 rounded-md cursor-pointer">
+                  <div className="relative  video-container ">
                     <label className="absolute z-10 text-white  font-semibold mt-4 ml-4">{video.fileName}</label>
                     {/* PLAY FILE WIT VIDEO & SOURCE TAG */}
                     <video width="900" height="400" controls>
@@ -66,10 +87,25 @@ function Home() {
                       <source src={video.videoPath} type="video/avi" />
                       <source src={video.videoPath} type="video/mov" />
                       {video.text}
+                      <h3 className="text-md font-semibold text-center">{video.subtitles.map((data) => data.text)}</h3>
                     </video>
+                    <ViewSubtitle/>
+                  {/* TEXT AREA UPLOAD CUSTOM_SUBTITLES */}
+                  <p className='text-center'>Add Custom Subtitle</p>
+                    <textarea
+                      type="text"
+                      id="custom_subtitles"
+                      rows={4}
+                      maxLength={200}
+                      className=" rounded-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Enter Subtitles"
+                      name='custom_subtitles'
+                      onChange={(e) => setCustomSubtitles(e.target.value)}
+                    />
+                    {/* ADD CUSTOM SUBTITLES BUTTON */}
+                    <div className='flex justify-center'>
+                    <button onClick={() => handleSubtitle(video.videoId)} className="text-white  mt-2 text-center inline-flex justify-center items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2 me-2  dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" >Add Subtitles</button>
                   </div>
-                  <div className="p-2">
-                    <h3 className="text-md font-semibold text-center">{video.subtitles.map((data) => data.text)}</h3>
                   </div>
                 </div>
               ))}

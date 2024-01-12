@@ -111,29 +111,7 @@ export const ListVideosWithSubtitles = async (req, res) => {
   }
 };
 
-//   save custom subtitles at specific timestamps to the "SUBTITLE" SCHEMA
-export const customSubtitles = async (req, res) => {
-  try {
-    const videoId = req.params.videoId;
-    const { specific_subtitles, startTime } = req.body;
 
-    // Save custom subtitle to the database
-    const subtitle = new Subtitle({
-      videoId,
-      specific_subtitles,
-      startTime,
-      isCustom: true,
-    });
-    await subtitle.save();
-
-    return res
-      .status(200)
-      .json({ message: "Custom subtitle submitted successfully.", subtitle });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Internal Server Error", error });
-  }
-};
 
 
 
