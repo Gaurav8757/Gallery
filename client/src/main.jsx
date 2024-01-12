@@ -25,6 +25,7 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode >
     <RouterProvider router={router} />
+    {/* TOAST POPUP FOR NOTIFY SUCCESS ERROR MESSAGE */}
     <ToastContainer
       position="top-right"
       autoClose={2000}

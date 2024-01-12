@@ -1,39 +1,36 @@
+// ALL UPLOADED VIDEOS SHOWS IN A GRID LISTS ALSO PLAY
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
 function Home() {
   const [videos, setVideos] = useState([]);
-
+// LISTS OF VIDEO URL, SUBTITLES AS TEXT NAME , FILENAME, 
   const fetchVideos = async () => {
     try {
       const response = await axios.get('https://upvideo.onrender.com/video/lists');
       setVideos(response.data);
-      // console.log(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-  // console.log(videos);
+ 
   useEffect(() => {
     fetchVideos();
-
-    // Set up an interval to fetch videos every, for example, 8 seconds
+    //SET UP AN INTERVAL TO FETCH VIDEOS EVERY, FOR EXAMPLE, 8 SECONDS
     const intervalId = setInterval(() => {
       fetchVideos();
-    }, 8000); // Adjust the interval time as needed
-
-    // Clean up the interval when the component is unmounted
+    }, 8000); // ADJUST THE INTERVAL TIME AS NEEDED 
+    //CLEAN UP THE INTERVAL WHEN THE COMPONENT IS UNMOUNTED
     return () => clearInterval(intervalId);
-  }, []); // Empty dependency array to run the effect only once on mount
-
-
+  }, []); // EMPTY DEPENDENCY ARRAY TO RUN THE EFFECT ONLY ONCE ON MOUNT
+ 
 
 
   return (
-
     <div className='bg-slate-400 h-screen'>
-
+      {/* CHECK IF LENGTH OF VIDEOS IS 0 SHOW LOADING OTHERWISE LISTS OF VIDEOS */}
       {videos.length === 0 ? (
         <>
           <div className="block justify-center pt-52 items-center">
@@ -52,17 +49,15 @@ function Home() {
           <div className="flex max-w-full p-10 gap-4 bg-slate-400">
 
             <div className='grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-4  md:grid-cols-3  sm:grid-cols-3  gap-5'>
+              {/* ITERATE OVER VIDEOS API */}
               {videos.map((video) => (
                 <div
                   key={video.videoId}
-                  className="relative grid overflow-hidden bg-gray-300 rounded-md cursor-pointer"
-                >
-
+                  className="relative grid overflow-hidden bg-gray-300 rounded-md cursor-pointer">
                   <div className="relative video-container ">
-
                     <label className="absolute z-10 text-white  font-semibold mt-4 ml-4">{video.fileName}</label>
+                    {/* PLAY FILE WIT VIDEO & SOURCE TAG */}
                     <video width="900" height="400" controls>
-
                       <source src={video.videoPath} type="video/mp4" />
                       <source src={video.videoPath} type="video/wmv" />
                       <source src={video.videoPath} type="video/flv" />
@@ -70,16 +65,12 @@ function Home() {
                       <source src={video.videoPath} type="video/mkv" />
                       <source src={video.videoPath} type="video/avi" />
                       <source src={video.videoPath} type="video/mov" />
-
                       {video.text}
                     </video>
                   </div>
-
-
                   <div className="p-2">
                     <h3 className="text-md font-semibold text-center">{video.subtitles.map((data) => data.text)}</h3>
                   </div>
-
                 </div>
               ))}
             </div>

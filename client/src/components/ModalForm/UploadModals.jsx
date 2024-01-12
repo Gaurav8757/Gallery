@@ -1,16 +1,18 @@
+// MODALS FOR FORM OPEN
 import { useState } from "react";
 import { RiVideoUploadLine } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import Form from "./Form";
+
+
 export function UploadModals() {
   const [isModalOpen, setModalOpen] = useState(false);
-
+// FUNCTION OPEN OR CLOSE MODALS
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
-
 
 
   return (
@@ -38,7 +40,7 @@ export function UploadModals() {
       {isModalOpen && (
         <div
           id="static-modal-1"
-          // data-modal-backdrop="static"
+          data-modal-backdrop="static"
           tabIndex="-1"
           className="fixed top-0 right-0  left-0  z-50 flex justify-center items-center w-full h-full bg-gray-700 bg-opacity-50 backdrop-blur-sm"
           onClick={toggleModal}
@@ -65,7 +67,7 @@ export function UploadModals() {
                 </button>
               </div>
 
-              {/* MODAL BODY */}
+              {/* MODAL BODY & USED FORM */}
               <Form />
             </div>
           </div>

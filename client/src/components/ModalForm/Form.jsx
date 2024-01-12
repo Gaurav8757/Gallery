@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from "axios";
+
 import { toast } from "react-toastify";
 import { PiUploadSimpleBold } from "react-icons/pi";
 import { RiVideoUploadLine } from "react-icons/ri";
@@ -8,6 +9,7 @@ import {
   buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+
 const Form = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [subtitles, setSubtitles] = useState("");
@@ -15,13 +17,14 @@ const Form = () => {
   const [videoerror, setVideoError] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
   const [videoPreview, setVideoPreview] = useState(null);
-  // HANDLE FILES
+
+  // HANDLE UPLOAD VIDEO 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
 
 
-    // Display video preview
+    // DISLAY VIDEO PREVIEW
     if (file && file.type.includes('video')) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -37,35 +40,36 @@ const Form = () => {
   const handleUpload = async () => {
     try {
 
-      // ERROR NOT INPUT SUBTITLES
+      // CHECK IF VIDEO FILE IS NOT SELECTED
       if (!subtitles) {
         setError('Please enter a subtitles');
         return;
       }
 
-      // Check if a file is selected
+      // CHECK IF VIDEO FILE IS NOT SELECTED
       if (!selectedFile) {
         setVideoError('Please select a video file to upload');
         return;
       }
-
+// ADD VIDEO TO UPLOAD VIDEO API
       const formData = new FormData();
       formData.append('filename', selectedFile);
-
+     
       const response = await axios.post('https://upvideo.onrender.com/video/upload', formData, {
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted); // Update upload progress
+          setUploadProgress(percentCompleted); // UPDATE UPLOAD PROGRESS
           if (percentCompleted === 100) {
-            // Reset the upload progress once it reaches 100%
+            // RESET THE UPLOAD PROGRESS ONCE IT REACHES 100%
             setUploadProgress(0);
+            toast.info(`ACQURING VIDEO TITLE...!!`);
           }
         },
       });
 
-      // Handle video upload success
+      // HANDLE SUCCESSFULLY UPLOAD VIDEO
       if (response.status === 200) {
-
+        
         // Fetch the videoId from the response
         const videoId = response.data.video._id;
 
@@ -99,7 +103,7 @@ const Form = () => {
           <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-00 dark:hover:border-gray-500 dark:hover:bg-gray-600">
             {videoPreview ? (
               <div className="relative inset-x-0 flex items-center justify-center">
-                <video width="90%" height="90%" >
+                <video  className='w-auto h-auto' >
                   <source src={videoPreview} type={selectedFile.type} />
                   Your browser does not support the video tag.
                 </video>

@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-    
+    {/* HEADER AND OUTLET  */}
       <Header />
      <Outlet />
     </>

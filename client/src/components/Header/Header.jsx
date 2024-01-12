@@ -1,5 +1,5 @@
+// HEADER COMPONENTS
 import { UploadModals } from "../ModalForm/UploadModals";
-
 function Header() {
   return (
     <header className="sticky top-0 z-50 max-w-screen">
@@ -16,5 +16,4 @@ function Header() {
     </header>
   );
 }
-
 export default Header;
