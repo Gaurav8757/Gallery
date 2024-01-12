@@ -1,3 +1,44 @@
+## VGallery(Snapshot)
+![image](https://github.com/Gaurav8757/Gallery/assets/94515205/6e074b90-a49b-44ba-ab7c-ead7a11bb2ed)
+
+# client
+Live Link: 
+```
+https://ubiquitous-hotteok-f3611a.netlify.app/
+```
+CLIENT(Video_Show)/
+|
+|-- public
+|
+|-- src/
+|    |-- assets
+|    |-- components/
+|    |        |-- Header/
+|    |        |    |-- Header.jsx
+|    |        |
+|    |        |-- Homepage/
+|    |        |    |-- Home.jsx
+|    |        |
+|    |        |-- ModalForm/
+|    |        |    |-- Form.jsx
+|    |        |    |-- UploadModals.jsx
+|    |        |
+|    |        |-- Subtitle/
+|    |        |    |-- ViewSubtitle.jsx
+|    |        
+|    |
+|    |
+|    |-- App.jsx
+|    |-- main.jsx
+|    |-- index.css
+|
+|
+|-- index.html
+|-- tailwind.config.js
+|-- vite.config.js
+|-- README.md
+
+
 # Server
 
 SERVER(Video_Uploads)/
@@ -36,8 +77,9 @@ SERVER(Video_Uploads)/
 |       |-- .env
 |       |-- node_modules
 |
-|
 |-- index.js
+|-- README.md
+
 
 
 # Local Server
@@ -63,8 +105,4 @@ http://localhost:3001/video/custom-subtitle/:videoId
 http://localhost:3001/video/lists
 
 ```
-```
-5. 
-http://localhost:3001/video/serve/:videoId
 
-```
