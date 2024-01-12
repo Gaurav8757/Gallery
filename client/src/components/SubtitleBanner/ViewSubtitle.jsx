@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const ViewSubtitle = () => {
   const [messages, setMessages] = useState([]);
-  const [scrollIndex, setScrollIndex] = useState(0);
+//   const [scrollIndex, setScrollIndex] = useState(0);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -40,9 +40,9 @@ const ViewSubtitle = () => {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`notice inline-block mx-4 opacity-0 transition-opacity duration-500 ${
-              index === scrollIndex ? 'opacity-100' : ''
-            }`}
+            className={`notice inline-block mx-4 opacity-0 transition-opacity duration-500 
+            
+       ` }
           >
             {message.map((data) => data.specific_subtitles)}
           </div>,
