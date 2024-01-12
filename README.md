@@ -1,4 +1,6 @@
-## VGallery
+## VGallery(Snapshot)
+![image](https://github.com/Gaurav8757/Gallery/assets/94515205/6e074b90-a49b-44ba-ab7c-ead7a11bb2ed)
+
 # client
 Live Link: 
 ```
