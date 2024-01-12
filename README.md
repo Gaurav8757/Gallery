@@ -1,6 +1,40 @@
+## VGallery
 # client
-
-
+Live Link: 
+```
+https://ubiquitous-hotteok-f3611a.netlify.app/
+```
+CLIENT(Video_Show)/
+|
+|-- public
+|
+|-- src/
+|    |-- assets
+|    |-- components/
+|    |        |-- Header/
+|    |        |    |-- Header.jsx
+|    |        |
+|    |        |-- Homepage/
+|    |        |    |-- Home.jsx
+|    |        |
+|    |        |-- ModalForm/
+|    |        |    |-- Form.jsx
+|    |        |    |-- UploadModals.jsx
+|    |        |
+|    |        |-- Subtitle/
+|    |        |    |-- ViewSubtitle.jsx
+|    |        
+|    |
+|    |
+|    |-- App.jsx
+|    |-- main.jsx
+|    |-- index.css
+|
+|
+|-- index.html
+|-- tailwind.config.js
+|-- vite.config.js
+|-- README.md
 
 
 # Server
@@ -41,8 +75,9 @@ SERVER(Video_Uploads)/
 |       |-- .env
 |       |-- node_modules
 |
-|
 |-- index.js
+|-- README.md
+
 
 
 # Local Server
